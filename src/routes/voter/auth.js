@@ -6,4 +6,4 @@ const { login, signup } = require("../../controllers/voter/auth");
 voterAuthRoutes.post("/login", login);
 voterAuthRoutes.post("/signup", signup);
 
-module.exports = { voterAuthRoutes };
+module.exports = voterAuthRoutes;
