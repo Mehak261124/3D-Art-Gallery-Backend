@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "devStart": "nodemon prisma/index.js"
+    "devStart": "nodemon prisma/index.js",
+    "prisma:generate": "prisma generate --schema=./models/schema.prisma",
+    "build": "npm run prisma:generate"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +17,7 @@
   },
   "dependencies": {
     "@prisma/client": "^5.20.0",
+    "axios": "^1.7.7",
     "bcrypt": "^5.1.1",
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
