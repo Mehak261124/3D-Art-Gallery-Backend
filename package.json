@@ -4,10 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "devStart": "nodemon prisma/index.js",
-    "prisma:generate": "prisma generate --schema=./models/schema.prisma",
-    "build": "npm run prisma:generate"
-  },
+  "start": "npm run prisma:generate && node src/index.js",
+  "devStart": "nodemon src/index.js",
+  "prisma:generate": "prisma generate --schema=./models/schema.prisma",
+  "build": "npm run prisma:generate"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
