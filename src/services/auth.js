@@ -1,7 +1,9 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const { VOTER, SECRET_KEY } = require("../utils/constants");
-const prisma = require("../config/database");
+const dotenv = require("dotenv");
+dotenv.config();
+const { VOTER } = require("../utils/constants");
+const {prisma} = require("../config/database");
 
 class AuthService {
 
@@ -13,7 +15,7 @@ class AuthService {
           accesses = [...accesses, VOTER];
         }
 
-        return jwt.sign(payload, SECRET_KEY, { algorithm: "HS256" });
+        return jwt.sign(payload, process.env.JWT_SECRET_KEY, { algorithm: "HS256" });
     }
 
     static async authenticateByPassword(id, passwordInput) {

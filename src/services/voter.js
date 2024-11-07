@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt");
-const prisma = require("../config/database");
+const {prisma} = require("../config/database");
 
 class VoterService {
   constructor(details) {
@@ -15,6 +15,7 @@ class VoterService {
         name: voterDetails.name,
         email: voterDetails.email,
         password: bcrypt.hashSync(voterDetails.password.toString(), 4),
+        role:"user"
       },
     });
     return { voter, message: "Account created Successfully!" };
