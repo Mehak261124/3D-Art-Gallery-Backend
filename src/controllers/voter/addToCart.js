@@ -31,7 +31,7 @@ exports.addToCart = async (req, res) => {
           },
         },
       });
-      return res.status(200).json({ message: 'Product added to cart' });
+      return res.status(200).json({ message: 'cart added to the user' });
     }
 
     // Check if the product is already in the cart
@@ -63,10 +63,12 @@ exports.addToCart = async (req, res) => {
         quantity,
       },
     });
-
+    // console.log("adding element in cart");
+    
     return res.status(200).json({ message: 'Product added to cart', cartItem: newCartItem });
   } catch (error) {
     console.error(error);
+    // console.log("cant add element in cart");
     return res.status(500).json({ error: 'An error occurred while adding product to cart' });
   }
 };
@@ -83,17 +85,20 @@ exports.removeFromCart = async (req, res) => {
         productId: parseInt(productId),
       },
     });
-
+    
     if (!cartItem) {
+      console.log("not found")
       return res.status(404).json({ error: 'Product not found in the cart' });
     }
 
     await prisma.cartItem.delete({
       where: {
         id: cartItem.id,
+        // cartId: parseInt(cartId),
+        // productId: parseInt(productId),
       },
     });
-
+    
     res.status(200).json({ message: 'Product removed from cart successfully' });
   } catch (error) {
     console.error(error);
@@ -103,11 +108,14 @@ exports.removeFromCart = async (req, res) => {
 };
 
 exports.Increment=async (req,res)=>{
-  const { id } = req.body;
-
+  const { productId, cartId } = req.body;
+  
   try{
-    const cartD=await prisma.cartItem.findUnique({
-      where:{id}
+    const cartD = await prisma.cartItem.findFirst({
+      where:{
+        productId:parseInt(productId),
+        cartId: parseInt(cartId),
+      }
     })
 
     console.log("this is cartd -> ",cartD);
@@ -115,12 +123,15 @@ exports.Increment=async (req,res)=>{
     console.log("this is newQ ",newQuantity);
   
     await prisma.cartItem.update({
-      where:{id},
+      where:{
+        id:cartD.id
+      },
       data:{
         quantity: newQuantity
       }
     })
-
+    // console.log("updated Success");
+    
     return res.status(200).send("updated")
   }catch(error){
     return res.status(500).send("Internal server error");
@@ -128,11 +139,14 @@ exports.Increment=async (req,res)=>{
 }
 
 exports.Decrement=async (req,res)=>{
-  const { id } = req.body;
+  const { productId, cartId } = req.body;
 
   try{
-    const cartD=await prisma.cartItem.findUnique({
-      where:{id}
+    const cartD = await prisma.cartItem.findFirst({
+      where:{
+        productId:parseInt(productId),
+        cartId: parseInt(cartId),
+      }
     })
 
     console.log("this is cartd -> ",cartD);
@@ -140,12 +154,14 @@ exports.Decrement=async (req,res)=>{
     console.log("this is newQ ",newQuantity);
   
     await prisma.cartItem.update({
-      where:{id},
+      where:{
+        id:cartD.id
+      },
       data:{
         quantity: newQuantity
       }
     })
-
+    console.log("updated Success");
     return res.status(200).send("updated")
   }catch(error){
     return res.status(500).send("Internal server error");
