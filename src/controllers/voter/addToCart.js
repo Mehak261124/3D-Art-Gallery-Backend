@@ -168,23 +168,78 @@ exports.Decrement=async (req,res)=>{
   }
 }
 
-exports.getCart = async (req, res) => {
-  const { userId } = req.session;
+// exports.getCart = async (req, res) => {
+//   const { userId } = req.session;
+
+//   try {
+//     const cart = await prisma.cart.findUnique({
+//       where: { userId },
+//       include: {
+//         items: {
+//           include: { product: true },
+//         },
+//       },
+//     });
+
+//     if (!cart) return res.status(404).json({ error: "Cart not found" });
+
+//     res.status(200).json(cart.items);
+//   } catch (error) {
+//     res.status(500).json({ error: "Could not fetch cart items" });
+//   }
+// };
+
+
+exports.getCartItems = async (req, res) => {
+  console.log("in this api");
+  const {userId}  = req.voter; // Assuming userId is stored in the session after login
+  console.log("this is userId : ",userId);
+
+  if (!userId) {
+    return res.status(401).json({ error: 'User not authenticated' });
+  }
 
   try {
     const cart = await prisma.cart.findUnique({
       where: { userId },
       include: {
         items: {
-          include: { product: true },
+          include: { 
+            product: {
+              select: {
+                id: true,
+                name: true,
+                price: true,
+                description: true,
+                imageUrl: true,
+                stock: true,
+              }
+            }
+          },
         },
       },
     });
 
-    if (!cart) return res.status(404).json({ error: "Cart not found" });
+    console.log("this is cart -> ",cart);
 
-    res.status(200).json(cart.items);
+    if (!cart) {
+      return res.status(404).json({ error: "Cart not found" });
+    }
+
+    return res.status(200).json({
+      cartId: cart.id,
+      items: cart.items.map(item => ({
+        productId: item.product.id,
+        productName: item.product.name,
+        productPrice: item.product.price,
+        productDescription: item.product.description,
+        productImageUrl: item.product.imageUrl,
+        productStock: item.product.stock,
+        quantity: item.quantity,
+      })),
+    });
   } catch (error) {
-    res.status(500).json({ error: "Could not fetch cart items" });
+    console.error(error);
+    return res.status(500).json({ error: "Could not fetch cart items" });
   }
 };

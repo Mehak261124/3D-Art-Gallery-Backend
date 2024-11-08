@@ -12,7 +12,7 @@ const verifyToken = (req, res, next) => {
     if (err) {
       return res.status(403).json({ message: "Invalid or expired token" });
     }
-    req.voter = { userId: decoded.userId };
+    req.voter = { userId: decoded.id };
     next();
   });
 };
