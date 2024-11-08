@@ -13,7 +13,7 @@ class VoterService {
     const voter = await prisma.voter.create({
       data: {
         name: voterDetails.name,
-        email: voterDetails.email,
+        email: voterDetails.email.toLowerCase(),
         password: bcrypt.hashSync(voterDetails.password.toString(), 4),
         role:"user"
       },
