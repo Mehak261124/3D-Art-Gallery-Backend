@@ -42,56 +42,63 @@ This is the backend for a 3D Art Gallery web application, built using **Node.js*
 - **GET `/product/:id`**: Fetch details of a specific product.
 - **GET `/product`**: Get a list of all products in the gallery.
 
+
+
 ## Installation
 
 1. Clone the repository:
 
    ```bash
    git clone https://github.com/yourusername/3d-art-gallery-backend.git
-   cd 3d-art-gallery-backend```
-   
+   cd 3d-art-gallery-backend
+   ```
+
 2. Install dependencies:
 
-```bash
-   npm install```
+   ```bash
+   npm install
+   ```
 
 3. Set up your environment variables:
 
-```DATABASE_URL: Your Prisma database connection URL.
-JWT_SECRET: Secret key for JWT token generation.```
+   ```
+   DATABASE_URL: Your Prisma database connection URL.
+   JWT_SECRET: Secret key for JWT token generation.
+   ```
 
 4. Run database migrations:
 
-```bash
-npx prisma migrate dev```
+   ```bash
+   npx prisma migrate dev
+   ```
 
 5. Start the application:
 
-```bash
-npm start```
+   ```bash
+   npm start
+   ```
 
 ## Folder Structure
-```bash
-Copy code
+
+```
 ├── controllers
 │   ├── voter
 │   │   ├── addToCart.js        # Cart management logic
 │   │   ├── auth.js             # Authentication logic
 │   │   └── productController.js # Product management logic
 ├── middleware
-│   ├── verifyToken.js           # Middleware to verify JWT tokens
-│   └── validationMiddleware.js  # Validation for product data
+│   ├── verifyToken.js          # Middleware to verify JWT tokens
+│   └── validationMiddleware.js # Validation for product data
 ├── routes
-│   ├── authRoute.js             # Authentication routes
-│   ├── addToCartRoute.js        # Cart routes
-│   └── productRoute.js          # Product routes
+│   ├── authRoute.js            # Authentication routes
+│   ├── addToCartRoute.js       # Cart routes
+│   └── productRoute.js         # Product routes
 ├── config
-│   └── database.js              # Prisma database configuration
+│   └── database.js             # Prisma database configuration
 ├── utils
-│   └── validators.js            # Input validation utilities
-└── package.json                 # Project dependencies and scripts```
-
-This project uses Prisma for ORM, and it includes models for User, Cart, CartItem, and Product. Below is a brief overview of the database models:
+│   └── validators.js           # Input validation utilities
+└── package.json                # Project dependencies and scripts
+```
 
 ## Database Schema
 
@@ -111,12 +118,14 @@ Represents the artworks in the gallery, including metadata such as price, descri
 
 The application uses JWT for authenticating users. To access protected routes, the user must provide a valid token in the request header.
 
-- **Example:**
+### Example:
 
 ```bash
 Authorization: Bearer <your-jwt-token>
+```
 
 ## Error Handling
+
 The backend handles errors with appropriate status codes:
 
 - **400:** Bad request (e.g., missing required fields).
