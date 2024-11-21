@@ -48,27 +48,27 @@ This is the backend for a 3D Art Gallery web application, built using **Node.js*
 
    ```bash
    git clone https://github.com/yourusername/3d-art-gallery-backend.git
-   cd 3d-art-gallery-backend
+   cd 3d-art-gallery-backend```
    
 2. Install dependencies:
 
 ```bash
-   npm install
+   npm install```
 
 3. Set up your environment variables:
 
 ```DATABASE_URL: Your Prisma database connection URL.
-JWT_SECRET: Secret key for JWT token generation.
+JWT_SECRET: Secret key for JWT token generation.```
 
 4. Run database migrations:
 
 ```bash
-npx prisma migrate dev
+npx prisma migrate dev```
 
 5. Start the application:
 
 ```bash
-npm start
+npm start```
 
 ## Folder Structure
 ```bash
@@ -89,17 +89,26 @@ Copy code
 │   └── database.js              # Prisma database configuration
 ├── utils
 │   └── validators.js            # Input validation utilities
-└── package.json                 # Project dependencies and scripts
+└── package.json                 # Project dependencies and scripts```
+
+This project uses Prisma for ORM, and it includes models for User, Cart, CartItem, and Product. Below is a brief overview of the database models:
 
 ## Database Schema
- This project uses Prisma for ORM, and it includes models for User, Cart, CartItem, and Product. Below is a brief overview of the database models:
 
-- **User**: Contains user data including authentication details (email, password).
-- **Cart**: Stores the cart associated with a user.
-- **CartItem**: Represents items in a cart, linking to products.
-- **Product**: Represents the artworks in the gallery, including metadata such as price, description, stock, and image URL.
+### **User**
+Contains user data including authentication details (email, password).
+
+### **Cart**
+Stores the cart associated with a user.
+
+### **CartItem**
+Represents items in a cart, linking to products.
+
+### **Product**
+Represents the artworks in the gallery, including metadata such as price, description, stock, and image URL.
 
 ## Authentication
+
 The application uses JWT for authenticating users. To access protected routes, the user must provide a valid token in the request header.
 
 - **Example:**
